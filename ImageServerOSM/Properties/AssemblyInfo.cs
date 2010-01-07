@@ -16,6 +16,8 @@
 // misrepresented as being the original software.
 //
 // 3. This notice may not be removed or altered in any source distribution.
+// 4. Users of this module must adhere to the licence conditions outlined by 
+//    Openstreetmap at http://www.openstreetmap.org/
 
 
 using System.Reflection;

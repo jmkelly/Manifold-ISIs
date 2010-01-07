@@ -1,0 +1,38 @@
+Copyright (C) 2009-2010 James Kelly
+
+Licence
+--------
+  Manifold-ISI is free software; you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation; either version 2 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program; if not, write to the Free Software
+  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+  
+
+Requirments
+-------
+  For use with Manifold GIS software version 8.  Not tested with any other
+  versions.
+
+Installation
+-------
+  Manifold GIS must be installed for this plug-in to work.  Add the required dlls
+  into the base Manifold directory (eg C:\Program Files\Manifold System).  While
+  this software has not been extensively tested on, it should work on both
+  64bit and 32bit versions of windows.
+  
+Contact info
+-------
+  I can be contacted through james.kelly.99@gmail.com
+  Donations welcome through my site at http://kelsos.wordpress.com/
+  
+  James Kelly.
+  

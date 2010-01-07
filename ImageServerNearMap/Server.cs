@@ -1,4 +1,5 @@
-﻿// Copyright (C) 2005-2006 Sergey Mitin
+﻿// Original code Copyright (C) 2005-2006 Sergey Mitin
+// Altered code for NearMap tile servers (c) 2009 James Kelly
 // For conditions of distribution and use, see copyright notice in AssemblyInfo.cs
 
 using System;

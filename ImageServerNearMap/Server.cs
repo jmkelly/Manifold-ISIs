@@ -140,6 +140,7 @@ namespace Manifold.ImageServer.NearMap
         // Download tile
         protected Boolean DownloadTile(String _strRequest, String _filename)
         {
+
             String tileInfo = "Url " + _strRequest + ". ";
             try
             {
@@ -199,6 +200,44 @@ namespace Manifold.ImageServer.NearMap
             }
         }
 
+        // Get the supplied area, in pixels
+        public IRectangle GetRectPixels(Int32 _scale, IRectangleD _rect)
+        {
+            Point ptLB = GetBitmapCoordinate(new PointF((float)_rect.XMin, (float)_rect.YMin), _scale);
+            Point ptRT = GetBitmapCoordinate(new PointF((float)_rect.XMax, (float)_rect.YMax), _scale);
+            return new Rectangle(ptLB.X, ptRT.Y, ptRT.X, ptLB.Y);
+        }
+
+        // Get the supplied area, in tiles
+        public  IRectangle GetRectTiles(Int32 _scale, IRectangleD _rect)
+        {
+            IRectangle rectFix = GetRectPixels(_scale, _rect);
+            rectFix.XMax = rectFix.XMax - 1;
+            rectFix.YMax = rectFix.YMax - 1;
+
+            rectFix.XMin = rectFix.XMin / m_nTileSizeX;
+            rectFix.YMin = rectFix.YMin / m_nTileSizeY;
+            rectFix.XMax = rectFix.XMax / m_nTileSizeX;
+            rectFix.YMax = rectFix.YMax / m_nTileSizeY;
+            return rectFix;
+        }
+
+        protected Point GetBitmapCoordinate(PointF ptMercator, int _scale)
+        {
+            Point ptBitmapCoord = new Point();
+
+            double dZoomCoef = Math.Pow(2.0, m_nScaleHi - _scale);
+            double dWidth = 2 * 20037508.342789244;
+            double dHeight = dWidth;
+
+            // left-top pixel is at (0, 0), reversed by Y
+            ptBitmapCoord.X = (int)Math.Floor(m_nTileSizeX * dZoomCoef / 2.0 + ptMercator.X * m_nTileSizeX * dZoomCoef / dWidth);
+            ptBitmapCoord.Y = (int)Math.Floor(m_nTileSizeY * dZoomCoef / 2.0 - ptMercator.Y * m_nTileSizeY * dZoomCoef / dHeight);
+            ptBitmapCoord.Y = Math.Max(0, ptBitmapCoord.Y);
+            ptBitmapCoord.Y = Math.Min((int)(m_nTileSizeY * dZoomCoef), ptBitmapCoord.Y);
+            return ptBitmapCoord;
+        }
+
         #endregion
 
         #region IServer interface
@@ -242,11 +281,7 @@ namespace Manifold.ImageServer.NearMap
             }
         }
 
-        // Get the supplied area, in pixels
-        abstract public IRectangle GetRectPixels(Int32 _scale, IRectangleD _rect);
-
-        // Get the supplied area, in tiles
-        abstract public IRectangle GetRectTiles(Int32 _scale, IRectangleD _rect);
+       
 
         // Get name
         public String Name
@@ -381,9 +416,9 @@ namespace Manifold.ImageServer.NearMap
     }
 
 
-    public class ServerNeamMapAerial : ServerNearMap 
+    public class ServerNearMapAerial : ServerNearMap 
     {
-        public ServerNeamMapAerial()
+        public ServerNearMapAerial()
             : base()
         {
             m_strDefaultUrl = "http://www.nearmap.com/maps/hl=en";
@@ -420,21 +455,7 @@ namespace Manifold.ImageServer.NearMap
             strWriter.Close();
         }
 
-        protected Point GetBitmapCoordinate(PointF ptMercator, int _scale)
-        {
-            Point ptBitmapCoord = new Point();
-
-            double dZoomCoef = Math.Pow(2.0, m_nScaleHi - _scale);
-            double dWidth = 2 * 20037508.342789244;
-            double dHeight = dWidth;
-
-            // left-top pixel is at (0, 0), reversed by Y
-            ptBitmapCoord.X = (int)Math.Floor(m_nTileSizeX * dZoomCoef / 2.0 + ptMercator.X * m_nTileSizeX * dZoomCoef / dWidth);
-            ptBitmapCoord.Y = (int)Math.Floor(m_nTileSizeY * dZoomCoef / 2.0 - ptMercator.Y * m_nTileSizeY * dZoomCoef / dHeight);
-            ptBitmapCoord.Y = Math.Max(0, ptBitmapCoord.Y);
-            ptBitmapCoord.Y = Math.Min((int)(m_nTileSizeY * dZoomCoef), ptBitmapCoord.Y);
-            return ptBitmapCoord;
-        }
+        
 
         #region IServer interface
 
@@ -443,48 +464,18 @@ namespace Manifold.ImageServer.NearMap
         {
             // remove whitespace characters from URI
             String strRequest = Regex.Replace(m_strUrl, "\\s", String.Empty);
-
             // add version
-            //int nIndex = strRequest.IndexOf("?");
-            //if (nIndex == -1)
-            //	strRequest += "?";
-            //else if (nIndex < strRequest.Length - 1 && strRequest[strRequest.Length - 1] != '&')
-            //	strRequest += "&";
             Int32 TMSscale = m_nScaleHi - _scale;
-            // add coordinates and zoom level
+
             strRequest += "&x=" + Convert.ToString(_x, CultureInfo.InvariantCulture);
             strRequest += "&y=" + Convert.ToString(_y, CultureInfo.InvariantCulture);
             strRequest += "&z=" + Convert.ToString(TMSscale, CultureInfo.InvariantCulture);
-            strRequest += "&nml=Vert";
-            
+            strRequest += "&nml=Vert";     
 
             return base.DownloadTile(strRequest, _filename);
 
         }
-        
-
-        // Get the supplied area, in pixels
-        public override IRectangle GetRectPixels(Int32 _scale, IRectangleD _rect)
-        {
-            Point ptLB = GetBitmapCoordinate(new PointF((float)_rect.XMin, (float)_rect.YMin), _scale);
-            Point ptRT = GetBitmapCoordinate(new PointF((float)_rect.XMax, (float)_rect.YMax), _scale);
-
-            return new Rectangle(ptLB.X, ptRT.Y, ptRT.X, ptLB.Y);
-        }
-
-        // Get the supplied area, in tiles
-        public override IRectangle GetRectTiles(Int32 _scale, IRectangleD _rect)
-        {
-            IRectangle rectFix = GetRectPixels(_scale, _rect);
-            rectFix.XMax = rectFix.XMax - 1;
-            rectFix.YMax = rectFix.YMax - 1;
-
-            rectFix.XMin = rectFix.XMin / m_nTileSizeX;
-            rectFix.YMin = rectFix.YMin / m_nTileSizeY;
-            rectFix.XMax = rectFix.XMax / m_nTileSizeX;
-            rectFix.YMax = rectFix.YMax / m_nTileSizeY;
-            return rectFix;
-        }
+              
 
         // Get scale names separated by commas
         public override String ScaleNames
@@ -498,6 +489,88 @@ namespace Manifold.ImageServer.NearMap
         #endregion
     }
 
+    public class ServerNearMapTerrain : ServerNearMap
+    {
+    public ServerNearMapTerrain()
+            : base()
+        {
+            m_strDefaultUrl = "http://www.nearmap.com/maps/hl=en";
+            m_strImageType = ".jpg";
+            m_strName = "NearMap Terrain Image";
+            m_strUrl = m_strDefaultUrl;
+            m_nScaleLo = 0;
+            m_nScaleHi = 17;
+            m_nTileSizeX = 256;
+            m_nTileSizeY = 256;
+
+            // save coordinate system in xml format
+            XmlWriterSettings settings = new XmlWriterSettings();
+            settings.OmitXmlDeclaration = true;
+            settings.Encoding = Encoding.UTF8;
+            settings.Indent = true;
+
+            StringWriter strWriter = new StringWriter();
+            XmlWriter writer = XmlWriter.Create(strWriter, settings);
+            writer.WriteStartDocument();
+            writer.WriteStartElement("data");
+            writer.WriteStartElement("coordinateSystem");
+            writer.WriteElementString("name", "Mercator");
+            writer.WriteElementString("datum", "World Geodetic 1984 (WGS84) Auto");
+            writer.WriteElementString("system", "Mercator");
+            writer.WriteElementString("unit", "Meter");
+            writer.WriteEndElement();
+            writer.WriteEndElement();
+            writer.WriteEndDocument();
+            writer.Flush();
+            writer.Close();
+
+            m_strCoordinateSystemXml = strWriter.ToString();
+            strWriter.Close();
+        }
+
+        
+
+        #region IServer interface
+
+
+        public override Boolean DownloadTile(Int32 _x, Int32 _y, Int32 _scale, String _filename)
+        {
+            // remove whitespace characters from URI
+            String strRequest = Regex.Replace(m_strUrl, "\\s", String.Empty);
+            // add version
+            Int32 TMSscale = m_nScaleHi - _scale;
+            //fudge to get around the fact that the Dem doesn not have information at the 0,0,0 scale
+
+            if (_x == 0 && _y == 0)
+            {
+                strRequest += "&x=" + Convert.ToString(_x, CultureInfo.InvariantCulture);
+                strRequest += "&y=" + Convert.ToString(_y, CultureInfo.InvariantCulture);
+                strRequest += "&z=" + Convert.ToString(TMSscale, CultureInfo.InvariantCulture);
+                strRequest += "&nml=Vert";
+            }
+            else
+            {
+                strRequest += "&x=" + Convert.ToString(_x, CultureInfo.InvariantCulture);
+                strRequest += "&y=" + Convert.ToString(_y, CultureInfo.InvariantCulture);
+                strRequest += "&z=" + Convert.ToString(TMSscale, CultureInfo.InvariantCulture);
+                strRequest += "&nml=Dem";
+            }
+            return base.DownloadTile(strRequest, _filename);
+
+        }
+              
+
+        // Get scale names separated by commas
+        public override String ScaleNames
+        {
+            get
+            {
+                return "1 m,2 m,5 m,10 m,20 m,40 m,80 m,160 m,320 m,640 m,1.3 km,2.5 km,5 km,10 km,20 km,40 km,80 km,160 km";
+            }
+        }
+
+        #endregion
+    }
 
 
 

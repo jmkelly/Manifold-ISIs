@@ -20,7 +20,33 @@ namespace Manifold.ImageServer.NearMap
         // Constructor
         public ServerNearMap()
         {
-            
+            m_nTileSizeX = 256;
+            m_nTileSizeY = 256;
+
+            // save coordinate system in xml format
+            XmlWriterSettings settings = new XmlWriterSettings();
+            settings.OmitXmlDeclaration = true;
+            settings.Encoding = Encoding.UTF8;
+            settings.Indent = true;
+
+            StringWriter strWriter = new StringWriter();
+            XmlWriter writer = XmlWriter.Create(strWriter, settings);
+            writer.WriteStartDocument();
+            writer.WriteStartElement("data");
+            writer.WriteStartElement("coordinateSystem");
+            writer.WriteElementString("name", "Mercator");
+            writer.WriteElementString("datum", "World Geodetic 1984 (WGS84) Auto");
+            writer.WriteElementString("system", "Mercator");
+            writer.WriteElementString("unit", "Meter");
+            writer.WriteEndElement();
+            writer.WriteEndElement();
+            writer.WriteEndDocument();
+            writer.Flush();
+            writer.Close();
+
+            m_strCoordinateSystemXml = strWriter.ToString();
+            strWriter.Close();
+ 
         }
 
         protected Int32 m_nScaleHi = 0;
@@ -416,6 +442,58 @@ namespace Manifold.ImageServer.NearMap
     }
 
 
+    public class ServerNearMapStreetmap : ServerNearMap
+    {
+        public ServerNearMapStreetmap()
+            : base()
+        {
+            m_strDefaultUrl = "http://www.nearmap.com/maps/hl=en&nml=Map_&nmg=1";
+            m_strImageType = ".png";
+            m_strName = "NearMap Streetmap";
+            m_strUrl = m_strDefaultUrl;
+            m_nScaleLo = 0;
+            m_nScaleHi = 20;
+        }
+        #region IServer interface
+
+
+        public override Boolean DownloadTile(Int32 _x, Int32 _y, Int32 _scale, String _filename)
+        {
+            // remove whitespace characters from URI
+            String strRequest = Regex.Replace(m_strUrl, "\\s", String.Empty);
+            // add version
+            Int32 TMSscale = m_nScaleHi - _scale;
+            if (_x == 0 && _y == 0)
+            {
+                strRequest += "&x=" + Convert.ToString(_x, CultureInfo.InvariantCulture);
+                strRequest += "&y=" + Convert.ToString(_y, CultureInfo.InvariantCulture);
+                strRequest += "&z=" + Convert.ToString(TMSscale, CultureInfo.InvariantCulture);
+                strRequest = strRequest.Replace("nml=Map_&nmg=1","nml=Vert");
+            }
+            else
+            {
+                strRequest += "&x=" + Convert.ToString(_x, CultureInfo.InvariantCulture);
+                strRequest += "&y=" + Convert.ToString(_y, CultureInfo.InvariantCulture);
+                strRequest += "&z=" + Convert.ToString(TMSscale, CultureInfo.InvariantCulture);
+            }
+                return base.DownloadTile(strRequest, _filename);
+
+        }
+
+
+        // Get scale names separated by commas
+        public override String ScaleNames
+        {
+            get
+            {
+                return "0.125m,0.25 m,0.5 m,1 m,2 m,5 m,10 m,20 m,40 m,80 m,160 m,320 m,640 m,1.3 km,2.5 km,5 km,10 km,20 km,40 km,80 km,160 km";
+            }
+        }
+
+        #endregion
+    }
+
+
     public class ServerNearMapAerial : ServerNearMap 
     {
         public ServerNearMapAerial()
@@ -427,36 +505,8 @@ namespace Manifold.ImageServer.NearMap
             m_strUrl = m_strDefaultUrl;
             m_nScaleLo = 0;
             m_nScaleHi = 20;
-            m_nTileSizeX = 256;
-            m_nTileSizeY = 256;
-
-            // save coordinate system in xml format
-            XmlWriterSettings settings = new XmlWriterSettings();
-            settings.OmitXmlDeclaration = true;
-            settings.Encoding = Encoding.UTF8;
-            settings.Indent = true;
-
-            StringWriter strWriter = new StringWriter();
-            XmlWriter writer = XmlWriter.Create(strWriter, settings);
-            writer.WriteStartDocument();
-            writer.WriteStartElement("data");
-            writer.WriteStartElement("coordinateSystem");
-            writer.WriteElementString("name", "Mercator");
-            writer.WriteElementString("datum", "World Geodetic 1984 (WGS84) Auto");
-            writer.WriteElementString("system", "Mercator");
-            writer.WriteElementString("unit", "Meter");
-            writer.WriteEndElement();
-            writer.WriteEndElement();
-            writer.WriteEndDocument();
-            writer.Flush();
-            writer.Close();
-
-            m_strCoordinateSystemXml = strWriter.ToString();
-            strWriter.Close();
+           
         }
-
-        
-
         #region IServer interface
 
 
@@ -500,35 +550,9 @@ namespace Manifold.ImageServer.NearMap
             m_strUrl = m_strDefaultUrl;
             m_nScaleLo = 0;
             m_nScaleHi = 17;
-            m_nTileSizeX = 256;
-            m_nTileSizeY = 256;
-
-            // save coordinate system in xml format
-            XmlWriterSettings settings = new XmlWriterSettings();
-            settings.OmitXmlDeclaration = true;
-            settings.Encoding = Encoding.UTF8;
-            settings.Indent = true;
-
-            StringWriter strWriter = new StringWriter();
-            XmlWriter writer = XmlWriter.Create(strWriter, settings);
-            writer.WriteStartDocument();
-            writer.WriteStartElement("data");
-            writer.WriteStartElement("coordinateSystem");
-            writer.WriteElementString("name", "Mercator");
-            writer.WriteElementString("datum", "World Geodetic 1984 (WGS84) Auto");
-            writer.WriteElementString("system", "Mercator");
-            writer.WriteElementString("unit", "Meter");
-            writer.WriteEndElement();
-            writer.WriteEndElement();
-            writer.WriteEndDocument();
-            writer.Flush();
-            writer.Close();
-
-            m_strCoordinateSystemXml = strWriter.ToString();
-            strWriter.Close();
+          
         }
-
-        
+    
 
         #region IServer interface
 

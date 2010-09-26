@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageServerTMS", "ImageServerTMS\ImageServerTMS.csproj", "{C1F2A075-A6EB-46CB-9444-31123D5E55FC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Manifold.ImageServer.TMS.Tests", "Manifold.ImageServer.TMS.Tests\Manifold.ImageServer.TMS.Tests.csproj", "{7A25B80F-D182-4325-9747-EEC8E9364167}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageServer.DPI", "ImageServer.DPI\ImageServer.DPI.csproj", "{839189D8-DD37-4C0A-AEDD-1ADAD59592DC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageServer.Localhost", "ImageServer.Localhost\ImageServer.Localhost.csproj", "{9E70E46B-447D-4D05-AD7E-543F4B102061}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C1F2A075-A6EB-46CB-9444-31123D5E55FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1F2A075-A6EB-46CB-9444-31123D5E55FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1F2A075-A6EB-46CB-9444-31123D5E55FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1F2A075-A6EB-46CB-9444-31123D5E55FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A25B80F-D182-4325-9747-EEC8E9364167}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A25B80F-D182-4325-9747-EEC8E9364167}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A25B80F-D182-4325-9747-EEC8E9364167}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A25B80F-D182-4325-9747-EEC8E9364167}.Release|Any CPU.Build.0 = Release|Any CPU
+		{839189D8-DD37-4C0A-AEDD-1ADAD59592DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{839189D8-DD37-4C0A-AEDD-1ADAD59592DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{839189D8-DD37-4C0A-AEDD-1ADAD59592DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{839189D8-DD37-4C0A-AEDD-1ADAD59592DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E70E46B-447D-4D05-AD7E-543F4B102061}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E70E46B-447D-4D05-AD7E-543F4B102061}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E70E46B-447D-4D05-AD7E-543F4B102061}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E70E46B-447D-4D05-AD7E-543F4B102061}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -35,9 +35,13 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files\Manifold System\Manifold.ImageServer.dll</HintPath>
     </Reference>
+    <Reference Include="Manifold.ImageServer.CCMA, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ImageServerCCMA\bin\Release\Manifold.ImageServer.CCMA.dll</HintPath>
+    </Reference>
     <Reference Include="Manifold.ImageServer.TMS, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\ImageServerTMS\bin\Debug\Manifold.ImageServer.TMS.dll</HintPath>
+      <HintPath>..\ImageServerTMS\bin\Release\Manifold.ImageServer.TMS.dll</HintPath>
     </Reference>
     <Reference Include="Moq, Version=4.0.10501.6, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -61,6 +65,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ImageServerCCMAtest.cs" />
     <Compile Include="ImageServerTMStests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

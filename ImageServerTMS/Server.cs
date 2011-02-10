@@ -8,22 +8,14 @@ namespace ImageServerTMS
 {
     public class ServerTMS:IServer 
     {
-        protected int _ScaleHi;
-        protected int _ScaleLo;
-        protected string _DefaultImageType;
-        protected string _DefaultURL;
-        protected String _ProxyAddress;
-        protected String _ProxyPassword;
-        protected String _ProxyUserName;
+        int _ScaleHi;
+        int _ScaleLo;
         
         //constructor
         public ServerTMS()
         {
             _ScaleHi = 19;
             _ScaleLo = 0;
-            _DefaultImageType = ".png";
-            _DefaultURL = "http://tileserver/";
-
 
 
         }
@@ -38,12 +30,12 @@ namespace ImageServerTMS
 
         public string DefaultImageType
         {
-            get { return _DefaultImageType; }
+            get { throw new NotImplementedException(); }
         }
 
         public string DefaultURL
         {
-            get { return _DefaultURL; }
+            get { throw new NotImplementedException(); }
         }
 
         public bool DownloadTile(int _x, int _y, int _scale, string _filename)
@@ -75,11 +67,11 @@ namespace ImageServerTMS
         {
             get
             {
-                return _ProxyAddress ;
+                throw new NotImplementedException();
             }
             set
             {
-                _ProxyAddress = value;
+                throw new NotImplementedException();
             }
         }
 
@@ -87,11 +79,11 @@ namespace ImageServerTMS
         {
             get
             {
-                return _ProxyPassword ;
+                throw new NotImplementedException();
             }
             set
             {
-                _ProxyPassword = value;
+                throw new NotImplementedException();
             }
         }
 
@@ -99,11 +91,11 @@ namespace ImageServerTMS
         {
             get
             {
-                return _ProxyUserName;
+                throw new NotImplementedException();
             }
             set
             {
-                _ProxyUserName = value;
+                throw new NotImplementedException();
             }
         }
 
@@ -114,12 +106,12 @@ namespace ImageServerTMS
 
         public int ScaleHi
         {
-            get { return _ScaleHi; }
+            get { throw new NotImplementedException(); }
         }
 
         public int ScaleLo
         {
-            get { return _ScaleLo; }
+            get { throw new NotImplementedException(); }
         }
 
         public string ScaleNames

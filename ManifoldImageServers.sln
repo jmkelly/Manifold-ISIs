@@ -17,8 +17,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageServerYahoo", "ImageSe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageServerYandex", "ImageServerYandex\ImageServerYandex.csproj", "{0B7813B6-7B70-4169-8D0F-254641D2169B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageServerTMS", "ImageServerTMS\ImageServerTMS.csproj", "{4F8C9B5C-AFF3-48DA-A44E-CF5D1FF3C135}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,10 +55,6 @@ Global
 		{0B7813B6-7B70-4169-8D0F-254641D2169B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0B7813B6-7B70-4169-8D0F-254641D2169B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0B7813B6-7B70-4169-8D0F-254641D2169B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4F8C9B5C-AFF3-48DA-A44E-CF5D1FF3C135}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4F8C9B5C-AFF3-48DA-A44E-CF5D1FF3C135}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4F8C9B5C-AFF3-48DA-A44E-CF5D1FF3C135}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4F8C9B5C-AFF3-48DA-A44E-CF5D1FF3C135}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

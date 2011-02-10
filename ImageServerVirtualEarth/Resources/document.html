@@ -1,0 +1,22 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>   
+<head>      
+	<title></title>      
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<script type="text/javascript" src="http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=6.2"></script>      
+	<script type="text/javascript">
+
+    var map = null;
+    function LoadMap()
+    {
+      map = new VEMap('_map');
+      map.LoadMap(new VELatLong(%lat%, %lon%), %zoom%, '%style%', false);
+    }
+
+  </script>   
+</head>   
+
+<body onload="LoadMap()">
+      <div id='_map' style="position:relative; width:256px; height:256px;"></div>
+</body>
+</html>  

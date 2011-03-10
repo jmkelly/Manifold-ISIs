@@ -494,25 +494,6 @@ namespace Manifold.ImageServer.VirtualEarth
 		}
 	}
 
-	public class ServerVirtualEarthStreetMapNew : ServerVirtualEarth
-	{
-		// Constructor
-		public ServerVirtualEarthStreetMapNew()
-			: base()
-		{
-            Name = "Bing Street Map Image (new style)";
-            DefaultImageType = ".png";
-            String strDefaultUrl = "http://ecn.t*.tiles.virtualearth.net/tiles/";
-            BaseMapType = "r";
-            BaseURL0 = "http://ecn.t0.tiles.virtualearth.net/tiles/";
-            BaseURL1 = "http://ecn.t1.tiles.virtualearth.net/tiles/";
-            BaseURL2 = "http://ecn.t2.tiles.virtualearth.net/tiles/";
-            BaseURL3 = "http://ecn.t3.tiles.virtualearth.net/tiles/";
-            DefaultURL = strDefaultUrl;
-            BaseUrlOpts = "&lbl=l1&stl=h&shading=hill";
-            URL = strDefaultUrl;
-		}
-	}
 
     public class ServerVirtualEarthStreetMap : ServerVirtualEarth
     {
@@ -529,7 +510,7 @@ namespace Manifold.ImageServer.VirtualEarth
             BaseURL2 = "http://ecn.t2.tiles.virtualearth.net/tiles/";
             BaseURL3 = "http://ecn.t3.tiles.virtualearth.net/tiles/";
             DefaultURL = strDefaultUrl;
-            BaseUrlOpts = "&stl=h&shading=hill";
+            BaseUrlOpts = "&lbl=l1&stl=h&shading=hill";
             URL = strDefaultUrl;
         }
     }

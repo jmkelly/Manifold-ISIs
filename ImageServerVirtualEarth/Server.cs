@@ -32,7 +32,7 @@ namespace Manifold.ImageServer.VirtualEarth
         private String[] m_strUrlsArray = new String[4];
         private String m_strMapType;
         private String m_strUrlOpts;
-		// Virtual Earth
+		// Bing
 		private Int32 m_nEarthRadius = 6378137;
 
         //private WebBrowser _browser;
@@ -434,7 +434,7 @@ namespace Manifold.ImageServer.VirtualEarth
 
 		#endregion
 
-        // Get or set Virtual Earth map type
+        // Get or set Bing map type
         protected String BaseMapType
         {
             get { return m_strMapType; }
@@ -482,7 +482,7 @@ namespace Manifold.ImageServer.VirtualEarth
 		public ServerVirtualEarthSatellite()
 			: base()
 		{
-			Name = "Virtual Earth Satellite Image";
+			Name = "Bing Satellite Image";
             String strDefaultUrl = "http://ecn.t*.tiles.virtualearth.net/tiles/";
             BaseMapType = "a";
             BaseURL0 = "http://ecn.t0.tiles.virtualearth.net/tiles/";
@@ -494,13 +494,33 @@ namespace Manifold.ImageServer.VirtualEarth
 		}
 	}
 
-	public class ServerVirtualEarthStreetMap : ServerVirtualEarth
+	public class ServerVirtualEarthStreetMapNew : ServerVirtualEarth
 	{
 		// Constructor
-		public ServerVirtualEarthStreetMap()
+		public ServerVirtualEarthStreetMapNew()
 			: base()
 		{
-            Name = "Virtual Earth Street Map Image";
+            Name = "Bing Street Map Image (new style)";
+            DefaultImageType = ".png";
+            String strDefaultUrl = "http://ecn.t*.tiles.virtualearth.net/tiles/";
+            BaseMapType = "r";
+            BaseURL0 = "http://ecn.t0.tiles.virtualearth.net/tiles/";
+            BaseURL1 = "http://ecn.t1.tiles.virtualearth.net/tiles/";
+            BaseURL2 = "http://ecn.t2.tiles.virtualearth.net/tiles/";
+            BaseURL3 = "http://ecn.t3.tiles.virtualearth.net/tiles/";
+            DefaultURL = strDefaultUrl;
+            BaseUrlOpts = "&lbl=l1&stl=h&shading=hill";
+            URL = strDefaultUrl;
+		}
+	}
+
+    public class ServerVirtualEarthStreetMap : ServerVirtualEarth
+    {
+        // Constructor
+        public ServerVirtualEarthStreetMap()
+            : base()
+        {
+            Name = "Bing Street Map Image (old style)";
             DefaultImageType = ".png";
             String strDefaultUrl = "http://ecn.t*.tiles.virtualearth.net/tiles/";
             BaseMapType = "r";
@@ -511,8 +531,8 @@ namespace Manifold.ImageServer.VirtualEarth
             DefaultURL = strDefaultUrl;
             BaseUrlOpts = "&stl=h&shading=hill";
             URL = strDefaultUrl;
-		}
-	}
+        }
+    }
 
     public class ServerVirtualEarthHybrid : ServerVirtualEarth
     {
@@ -520,7 +540,7 @@ namespace Manifold.ImageServer.VirtualEarth
         public ServerVirtualEarthHybrid()
             : base()
         {
-            Name = "Virtual Earth Hybrid Image";
+            Name = "Bing Hybrid Image";
             String strDefaultUrl = "http://ecn.t*.tiles.virtualearth.net/tiles/";
             BaseMapType = "h";
             BaseURL0 = "http://ecn.t0.tiles.virtualearth.net/tiles/";

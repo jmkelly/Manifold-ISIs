@@ -1,0 +1,62 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeocodingServerGeocoderUS", "GeocodingServerGeocoderUS\GeocodingServerGeocoderUS.csproj", "{277AA26E-9BB5-487E-B910-7CDF989D6C48}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeocodingServerVirtualEarth", "GeocodingServerVirtualEarth\GeocodingServerVirtualEarth.csproj", "{56B5C3CC-5647-411A-8234-8D6F6C8F77AC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageServerNearMap", "ImageServerNearMap\ImageServerNearMap.csproj", "{147AD108-C4AF-46BE-82DC-275B3582E2D5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageServerOpenStreetMaps", "ImageServerOpenStreetMaps\ImageServerOpenStreetMaps.csproj", "{841B0455-B93F-4FDC-A460-11B57676B347}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageServerVirtualEarth", "ImageServerVirtualEarth\ImageServerVirtualEarth.csproj", "{9AE0B6CC-651A-4F2B-A1FF-7B9BC73388FF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageServerWikiMapia", "ImageServerWikiMapia\ImageServerWikiMapia.csproj", "{6D0365AA-D2CE-4807-8B78-9EA1ED6A2945}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageServerYahoo", "ImageServerYahoo\ImageServerYahoo.csproj", "{A1C4AD1D-BB11-432C-B852-FCDAE08D4F78}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageServerYandex", "ImageServerYandex\ImageServerYandex.csproj", "{0B7813B6-7B70-4169-8D0F-254641D2169B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{277AA26E-9BB5-487E-B910-7CDF989D6C48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{277AA26E-9BB5-487E-B910-7CDF989D6C48}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{277AA26E-9BB5-487E-B910-7CDF989D6C48}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{277AA26E-9BB5-487E-B910-7CDF989D6C48}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56B5C3CC-5647-411A-8234-8D6F6C8F77AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56B5C3CC-5647-411A-8234-8D6F6C8F77AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56B5C3CC-5647-411A-8234-8D6F6C8F77AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56B5C3CC-5647-411A-8234-8D6F6C8F77AC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{147AD108-C4AF-46BE-82DC-275B3582E2D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{147AD108-C4AF-46BE-82DC-275B3582E2D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{147AD108-C4AF-46BE-82DC-275B3582E2D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{147AD108-C4AF-46BE-82DC-275B3582E2D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{841B0455-B93F-4FDC-A460-11B57676B347}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{841B0455-B93F-4FDC-A460-11B57676B347}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{841B0455-B93F-4FDC-A460-11B57676B347}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{841B0455-B93F-4FDC-A460-11B57676B347}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9AE0B6CC-651A-4F2B-A1FF-7B9BC73388FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9AE0B6CC-651A-4F2B-A1FF-7B9BC73388FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9AE0B6CC-651A-4F2B-A1FF-7B9BC73388FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9AE0B6CC-651A-4F2B-A1FF-7B9BC73388FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D0365AA-D2CE-4807-8B78-9EA1ED6A2945}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D0365AA-D2CE-4807-8B78-9EA1ED6A2945}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D0365AA-D2CE-4807-8B78-9EA1ED6A2945}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D0365AA-D2CE-4807-8B78-9EA1ED6A2945}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1C4AD1D-BB11-432C-B852-FCDAE08D4F78}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1C4AD1D-BB11-432C-B852-FCDAE08D4F78}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1C4AD1D-BB11-432C-B852-FCDAE08D4F78}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1C4AD1D-BB11-432C-B852-FCDAE08D4F78}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B7813B6-7B70-4169-8D0F-254641D2169B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B7813B6-7B70-4169-8D0F-254641D2169B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B7813B6-7B70-4169-8D0F-254641D2169B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B7813B6-7B70-4169-8D0F-254641D2169B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

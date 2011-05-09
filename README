@@ -1,25 +1,14 @@
-Copyright (C) 2009-2010 James Kelly
-
-Licence
+Credits
 --------
-  Manifold-ISI is free software; you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation; either version 2 of the License, or
-  (at your option) any later version.
+  Thanks to CDA International (Manifold.net) for most of the image server code and the flexibility to release the code.  
+Additions by James Kelly, 2011.
 
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
 
-  You should have received a copy of the GNU General Public License
-  along with this program; if not, write to the Free Software
-  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-  
 Data Licencing
 --------
   For licencing for OpenStreetMaps go to http://www.openstreetmap.org/
   For licencing for NearMap go to http://www.nearmap.com/legal/licence.aspx  
+  For MapQuest Open Aerial Tiles, portions coutesy NASA/JPL-Caltech and U.S. Depart. of Agriculture, Farm Service Agency.
 
 Requirments
 -------

@@ -11,44 +11,9 @@ using System.Xml;
 using System.Windows.Forms;
 using System.Net.Cache;
 
-namespace Manifold.ImageServer.NearMap
+namespace Manifold.ImageServer.Yahoo
 {
-<<<<<<< HEAD
-    public abstract class ServerNearMap : IServer
-    {
-        // Constructor
-        public ServerNearMap()
-        {
-            m_nTileSizeX = 256;
-            m_nTileSizeY = 256;
-
-            // save coordinate system in xml format
-            XmlWriterSettings settings = new XmlWriterSettings();
-            settings.OmitXmlDeclaration = true;
-            settings.Encoding = Encoding.UTF8;
-            settings.Indent = true;
-
-            StringWriter strWriter = new StringWriter();
-            XmlWriter writer = XmlWriter.Create(strWriter, settings);
-            writer.WriteStartDocument();
-            writer.WriteStartElement("data");
-            writer.WriteStartElement("coordinateSystem");
-            writer.WriteElementString("name", "Mercator");
-            writer.WriteElementString("datum", "World Geodetic 1984 (WGS84) Auto");
-            writer.WriteElementString("system", "Mercator");
-            writer.WriteElementString("unit", "Meter");
-            writer.WriteEndElement();
-            writer.WriteEndElement();
-            writer.WriteEndDocument();
-            writer.Flush();
-            writer.Close();
-
-            m_strCoordinateSystemXml = strWriter.ToString();
-            strWriter.Close();
- 
-        }
-=======
-	public abstract class ServerNearMap : IServer
+	public abstract class ServerYahoo : IServer
 	{
 		// Server data
 		private String m_strName;
@@ -65,11 +30,11 @@ namespace Manifold.ImageServer.NearMap
 		private Int32 m_nTileSizeX;
 		private Int32 m_nTileSizeY;
 
-        private String[] _urls = new String[4];
+        private String[] _urls = new String[3];
         protected String[] Urls { get { return _urls; } }
 
 		// Constructor
-		public ServerNearMap()
+		public ServerYahoo()
 		{
             m_strName = "";
             m_strDefaultUrl = "";
@@ -80,7 +45,7 @@ namespace Manifold.ImageServer.NearMap
 			m_strProxyPassword = "";
 			m_strProxyUserName = "";
 			m_nScaleLo = 1;
-			m_nScaleHi = 20;
+			m_nScaleHi = 17;
 			m_nTileSizeX = 256;
 			m_nTileSizeY = 256;
 
@@ -123,7 +88,7 @@ namespace Manifold.ImageServer.NearMap
 		private HttpWebRequest CreateHttpRequest(String _url, String _strProxyAddress, String _strProxyUsername, String _strProxyPassword)
 		{
 			HttpWebRequest request = (HttpWebRequest)WebRequest.Create(_url);
-            RequestCachePolicy policy = new RequestCachePolicy(RequestCacheLevel.CacheIfAvailable);
+            RequestCachePolicy policy = new RequestCachePolicy(RequestCacheLevel.BypassCache);
             request.CachePolicy = policy;
             //request.UserAgent = "Mozila/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; MyIE2;";
 
@@ -208,26 +173,13 @@ namespace Manifold.ImageServer.NearMap
 		// Download tile data to file
 		public Boolean DownloadTile(Int32 _x, Int32 _y, Int32 _scale, String _filename)
 		{
-            
->>>>>>> c206b144da493f52558bca5ac3597385d3a227d8
-
-            
-
             _scale = ScaleHi - _scale + 1;
             Int32 tiles = (Int32)Math.Pow(2, _scale); // currect scale tiles
+            _scale += 1; // yahoo's scale
+            _y -= tiles / 2; // move '0' to equator
 
             String url = DefaultURL.Equals(URL, StringComparison.InvariantCultureIgnoreCase)
                 ? Urls[Math.Abs(_x + _y) % Urls.Length] : URL;
-
-
-            //If using a Dem tile, there is nothing at location x=0, y=0, so substitute
-            //with the normal image file
-
-            if ((_x == 0) && (_y == 0))
-            {
-                url = url.Replace("&nml=Dem", "&nml=Vert");
-            }
-
 
 			String tileInfo = "";
             String strRequest = url;
@@ -250,6 +202,10 @@ namespace Manifold.ImageServer.NearMap
 				{
 					// try converting to an image
 					Image image = Image.FromStream(response.GetResponseStream());
+					// crop the image
+                    //PixelFormat pixelFormat = image.PixelFormat;
+                    //Bitmap bitmap = new Bitmap(image).Clone(new System.Drawing.Rectangle(1, 1, 256, 256), pixelFormat);
+
 					if (_filename != null && _filename.Length != 0)
 						image.Save(_filename, ImageFormat.Png);
 				}
@@ -274,12 +230,12 @@ namespace Manifold.ImageServer.NearMap
 			}
 			catch (WebException we)
 			{
-                m_strError = tileInfo + we.Message + ": " + strRequest;
+				m_strError = tileInfo + we.Message;
 				return false;
 			}
 			catch (Exception e)
 			{
-                m_strError = tileInfo + e.Message + ": " + strRequest ;
+				m_strError = tileInfo + e.Message;
 				throw;
 			}
 		}
@@ -289,8 +245,7 @@ namespace Manifold.ImageServer.NearMap
 		{
             int d = (1 << (m_nScaleHi - _scale + 1)) * m_nTileSizeY;
             double c = Math.Pow(2.0, _scale - m_nScaleLo);
-            // reverse y
-            Rectangle rect = new Rectangle((int)((_rect.XMin) / c), Math.Max(0, Math.Min(d - 1, (int)(d - (_rect.YMax) / c))), (int)((_rect.XMax) / c), Math.Max(0, Math.Min(d - 1, (int)(d - (_rect.YMin) / c))));
+            Rectangle rect = new Rectangle((int)((_rect.XMin) / c), Math.Max(0, Math.Min(d - 1, (int)((_rect.YMin) / c))), (int)((_rect.XMax) / c), Math.Max(0, Math.Min(d - 1, (int)((_rect.YMax) / c))));
             return rect;
 		}
 
@@ -342,7 +297,7 @@ namespace Manifold.ImageServer.NearMap
 			set { m_strProxyUserName = value; }
 		}
 		// Returns True if Y axis is reversed and False otherwise
-        public Boolean ReverseY { get { return true; } }
+        public Boolean ReverseY { get { return false; } }
 		// Get least detailed scale
         public Int32 ScaleHi { get { return m_nScaleHi; } }
 		// Get most detailed scale
@@ -350,7 +305,7 @@ namespace Manifold.ImageServer.NearMap
 		// Get scale names separated by commas
 		public String ScaleNames
 		{
-            get { return "0.2 m,0.3 m,0.5 m,1 m,2 m,5 m,10 m,20 m,40 m,80 m,160 m,320 m,640 m,1.3 km,2.5 km,5 km,10 km,20 km,40 km,80 km"; }
+			get { return "1 m,2 m,5 m,10 m,20 m,40 m,80 m,160 m,320 m,640 m,1.3 km,2.5 km,5 km,10 km,20 km,40 km,80 km"; }
 		}
 		// Get tile size by X
         public Int32 TileSizeX { get { return m_nTileSizeX; } }
@@ -364,182 +319,40 @@ namespace Manifold.ImageServer.NearMap
 		}
 	}
 
-    public class ServerNearMapSatellite : ServerNearMap
+    public class ServerYahooSatellite : ServerYahoo
     {
-        public ServerNearMapSatellite()
+        public ServerYahooSatellite()
         {
-            // http://www.nearmap.com/
-            Name = "NearMap Satellite Image";
-            DefaultURL = "http://web*.nearmap.com/maps/hl=en&nml=Vert";
-            Urls[0] = "http://web0.nearmap.com/maps/hl=en&nml=Vert";
-            Urls[1] = "http://web1.nearmap.com/maps/hl=en&nml=Vert";
-            Urls[2] = "http://web2.nearmap.com/maps/hl=en&nml=Vert";
-            Urls[3] = "http://web3.nearmap.com/maps/hl=en&nml=Vert";
+            Name = "Yahoo! Maps Satellite Image";
+            DefaultURL = "http://maps*.yimg.com/ae/ximg?v=1.9&t=a&s=256&.intl=en&r=1";
+            Urls[0] = "http://maps1.yimg.com/ae/ximg?v=1.9&t=a&s=256&.intl=en&r=1";
+            Urls[1] = "http://maps2.yimg.com/ae/ximg?v=1.9&t=a&s=256&.intl=en&r=1";
+            Urls[2] = "http://maps3.yimg.com/ae/ximg?v=1.9&t=a&s=256&.intl=en&r=1";
         }
     }
 
-<<<<<<< HEAD
 
-    public class ServerNearMapStreetmap : ServerNearMap
+    public class ServerYahooStreetMap : ServerYahoo
     {
-        public ServerNearMapStreetmap()
-            : base()
+        public ServerYahooStreetMap()
         {
-            m_strDefaultUrl = "http://www.nearmap.com/maps/hl=en&nml=Map_&nmg=1";
-            m_strImageType = ".png";
-            m_strName = "NearMap Streetmap";
-            m_strUrl = m_strDefaultUrl;
-            m_nScaleLo = 0;
-            m_nScaleHi = 20;
-        }
-        #region IServer interface
-
-
-        public override Boolean DownloadTile(Int32 _x, Int32 _y, Int32 _scale, String _filename)
-        {
-            // remove whitespace characters from URI
-            String strRequest = Regex.Replace(m_strUrl, "\\s", String.Empty);
-            // add version
-            Int32 TMSscale = m_nScaleHi - _scale;
-            if (_x == 0 && _y == 0)
-            {
-                strRequest += "&x=" + Convert.ToString(_x, CultureInfo.InvariantCulture);
-                strRequest += "&y=" + Convert.ToString(_y, CultureInfo.InvariantCulture);
-                strRequest += "&z=" + Convert.ToString(TMSscale, CultureInfo.InvariantCulture);
-                strRequest = strRequest.Replace("nml=Map_&nmg=1","nml=Vert");
-            }
-            else
-            {
-                strRequest += "&x=" + Convert.ToString(_x, CultureInfo.InvariantCulture);
-                strRequest += "&y=" + Convert.ToString(_y, CultureInfo.InvariantCulture);
-                strRequest += "&z=" + Convert.ToString(TMSscale, CultureInfo.InvariantCulture);
-            }
-                return base.DownloadTile(strRequest, _filename);
-
-        }
-
-
-        // Get scale names separated by commas
-        public override String ScaleNames
-        {
-            get
-            {
-                return "0.125m,0.25 m,0.5 m,1 m,2 m,5 m,10 m,20 m,40 m,80 m,160 m,320 m,640 m,1.3 km,2.5 km,5 km,10 km,20 km,40 km,80 km,160 km";
-            }
-        }
-
-        #endregion
-    }
-
-
-    public class ServerNearMapAerial : ServerNearMap 
-    {
-        public ServerNearMapAerial()
-            : base()
-        {
-            m_strDefaultUrl = "http://www.nearmap.com/maps/hl=en";
-            m_strImageType = ".jpg";
-            m_strName = "NearMap Aerial Image";
-            m_strUrl = m_strDefaultUrl;
-            m_nScaleLo = 0;
-            m_nScaleHi = 20;
-           
-        }
-        #region IServer interface
-
-
-        public override Boolean DownloadTile(Int32 _x, Int32 _y, Int32 _scale, String _filename)
-=======
-    public class ServerNearMapStreetMap : ServerNearMap
-    {
-        public ServerNearMapStreetMap()
->>>>>>> c206b144da493f52558bca5ac3597385d3a227d8
-        {
-            Name = "NearMap Street Map Image";
-            DefaultURL = "http://web*.nearmap.com/maps/hl=en&nml=Map";
-            Urls[0] = "http://web0.nearmap.com/maps/hl=en&nml=Map";
-            Urls[1] = "http://web1.nearmap.com/maps/hl=en&nml=Map";
-            Urls[2] = "http://web2.nearmap.com/maps/hl=en&nml=Map";
-            Urls[3] = "http://web3.nearmap.com/maps/hl=en&nml=Map";
+            Name = "Yahoo! Maps Street Map Image";
+            DefaultURL = "http://maps*.yimg.com/hx/tl?b=1&v=4.3&intl=en&r=1";
+            Urls[0] = "http://maps1.yimg.com/hx/tl?b=1&v=4.3&intl=en&r=1";
+            Urls[1] = "http://maps2.yimg.com/hx/tl?b=1&v=4.3&intl=en&r=1";
+            Urls[2] = "http://maps3.yimg.com/hx/tl?b=1&v=4.3&intl=en&r=1";
         }
     }
 
-    public class ServerNearMapStreetMapTransparent : ServerNearMap
+    public class ServerYahooStreetMapTransparent : ServerYahoo
     {
-        public ServerNearMapStreetMapTransparent()
+        public ServerYahooStreetMapTransparent()
         {
-            Name = "NearMap Street Map Image (Transparent)";
-            DefaultURL = "http://web*.nearmap.com/maps/hl=en&nml=MapT";
-            Urls[0] = "http://web0.nearmap.com/maps/hl=en&nml=MapT";
-            Urls[1] = "http://web1.nearmap.com/maps/hl=en&nml=MapT";
-            Urls[2] = "http://web2.nearmap.com/maps/hl=en&nml=MapT";
-            Urls[3] = "http://web3.nearmap.com/maps/hl=en&nml=MapT";
+            Name = "Yahoo! Maps Street Map Image (Transparent)";
+            DefaultURL = "http://maps*.yimg.com/hx/tl?b=1&v=4.3&intl=en&r=1&t=h";
+            Urls[0] = "http://maps1.yimg.com/hx/tl?b=1&v=4.3&intl=en&r=1&t=h";
+            Urls[1] = "http://maps2.yimg.com/hx/tl?b=1&v=4.3&intl=en&r=1&t=h";
+            Urls[2] = "http://maps3.yimg.com/hx/tl?b=1&v=4.3&intl=en&r=1&t=h";
         }
-    }
-
-    public class ServerNearMapTerrain : ServerNearMap
-    {
-        public ServerNearMapTerrain()
-        {
-<<<<<<< HEAD
-            m_strDefaultUrl = "http://www.nearmap.com/maps/hl=en";
-            m_strImageType = ".jpg";
-            m_strName = "NearMap Terrain Image";
-            m_strUrl = m_strDefaultUrl;
-            m_nScaleLo = 0;
-            m_nScaleHi = 17;
-          
-        }
-    
-
-        #region IServer interface
-
-
-        public override Boolean DownloadTile(Int32 _x, Int32 _y, Int32 _scale, String _filename)
-        {
-            // remove whitespace characters from URI
-            String strRequest = Regex.Replace(m_strUrl, "\\s", String.Empty);
-            // add version
-            Int32 TMSscale = m_nScaleHi - _scale;
-            //fudge to get around the fact that the Dem doesn not have information at the 0,0,0 scale
-
-            if (_x == 0 && _y == 0)
-            {
-                strRequest += "&x=" + Convert.ToString(_x, CultureInfo.InvariantCulture);
-                strRequest += "&y=" + Convert.ToString(_y, CultureInfo.InvariantCulture);
-                strRequest += "&z=" + Convert.ToString(TMSscale, CultureInfo.InvariantCulture);
-                strRequest += "&nml=Vert";
-            }
-            else
-            {
-                strRequest += "&x=" + Convert.ToString(_x, CultureInfo.InvariantCulture);
-                strRequest += "&y=" + Convert.ToString(_y, CultureInfo.InvariantCulture);
-                strRequest += "&z=" + Convert.ToString(TMSscale, CultureInfo.InvariantCulture);
-                strRequest += "&nml=Dem";
-            }
-            return base.DownloadTile(strRequest, _filename);
-
-        }
-              
-
-        // Get scale names separated by commas
-        public override String ScaleNames
-        {
-            get
-            {
-                return "1 m,2 m,5 m,10 m,20 m,40 m,80 m,160 m,320 m,640 m,1.3 km,2.5 km,5 km,10 km,20 km,40 km,80 km,160 km";
-            }
-        }
-
-        #endregion
-=======
-            Name = "NearMap Terrain Image";
-            DefaultURL = "http://web*.nearmap.com/maps/hl=en&nml=Dem";
-            Urls[0] = "http://web0.nearmap.com/maps/hl=en&nml=Dem";
-            Urls[1] = "http://web1.nearmap.com/maps/hl=en&nml=Dem";
-            Urls[2] = "http://web2.nearmap.com/maps/hl=en&nml=Dem";
-            Urls[3] = "http://web3.nearmap.com/maps/hl=en&nml=Dem";
-        }
->>>>>>> c206b144da493f52558bca5ac3597385d3a227d8
     }
 }

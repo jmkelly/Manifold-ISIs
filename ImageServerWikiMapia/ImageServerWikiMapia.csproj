@@ -2,13 +2,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>8.0.50727</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{147AD108-C4AF-46BE-82DC-275B3582E2D5}</ProjectGuid>
+    <ProjectGuid>{6D0365AA-D2CE-4807-8B78-9EA1ED6A2945}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Manifold.ImageServer.NearMap</RootNamespace>
-    <AssemblyName>Manifold.ImageServer.NearMap</AssemblyName>
+    <RootNamespace>Manifold.ImageServer.WikiMapia</RootNamespace>
+    <AssemblyName>Manifold.ImageServer.WikiMapia</AssemblyName>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <UpgradeBackupLocation>
@@ -41,7 +41,6 @@
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>

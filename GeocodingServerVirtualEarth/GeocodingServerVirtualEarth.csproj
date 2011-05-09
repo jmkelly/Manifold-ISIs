@@ -4,11 +4,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{147AD108-C4AF-46BE-82DC-275B3582E2D5}</ProjectGuid>
+    <ProjectGuid>{56B5C3CC-5647-411A-8234-8D6F6C8F77AC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Manifold.ImageServer.NearMap</RootNamespace>
-    <AssemblyName>Manifold.ImageServer.NearMap</AssemblyName>
+    <RootNamespace>Manifold.GeocodingServer.VirtualEarth</RootNamespace>
+    <AssemblyName>Manifold.GeocodingServer.VirtualEarth</AssemblyName>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <UpgradeBackupLocation>
@@ -34,14 +34,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Manifold.ImageServer, Version=1.0.0.0, Culture=neutral, PublicKeyToken=058e4cb7a1c54ee9, processorArchitecture=MSIL">
+    <Reference Include="Manifold.GeocodingServer, Version=1.0.0.0, Culture=neutral, PublicKeyToken=058e4cb7a1c54ee9, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\References\Manifold.ImageServer.dll</HintPath>
+      <HintPath>..\References\Manifold.GeocodingServer.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
-    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>

@@ -20,8 +20,8 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Security.Permissions;
 
-[assembly: AssemblyProduct("Manifold Image Server for NearMap")]
-[assembly: AssemblyTitle("Manifold Image Server for NearMap")]
+[assembly: AssemblyProduct("Manifold Geocoding Server for Geocoder.US")]
+[assembly: AssemblyTitle("Manifold Geocoding Server for Geocoder.US")]
 [assembly: AssemblyVersion("4.0.0.0")]
 [assembly: ComVisible(false)]
 

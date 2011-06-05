@@ -501,7 +501,7 @@ namespace Manifold.ImageServer.VirtualEarth
         public ServerVirtualEarthStreetMap()
             : base()
         {
-            Name = "Bing Street Map Image (old style)";
+            Name = "Bing Street Map Image";
             DefaultImageType = ".png";
             String strDefaultUrl = "http://ecn.t*.tiles.virtualearth.net/tiles/";
             BaseMapType = "r";

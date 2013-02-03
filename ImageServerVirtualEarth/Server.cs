@@ -49,7 +49,7 @@ namespace Manifold.ImageServer.VirtualEarth
 			m_strProxyPassword = "";
 			m_strProxyUserName = "";
 			m_nScaleLo = 1;
-			m_nScaleHi = 19;
+			m_nScaleHi = 20;
 			m_nTileSizeX = 256;
 			m_nTileSizeY = 256;
             m_strUrlOpts = "";
@@ -410,7 +410,7 @@ namespace Manifold.ImageServer.VirtualEarth
 		// Get scale names separated by commas
 		public String ScaleNames
 		{
-			get { return "0.3 m,0.5 m,1 m,2 m,5 m,10 m,20 m,40 m,80 m,160 m,320 m,640 m,1.3 km,2.5 km,5 km,10 km,20 km,40 km,80 km"; }
+			get { return "0.125 m, 0.25 m,0.5 m,1 m,2 m,5 m,10 m,20 m,40 m,80 m,160 m,320 m,640 m,1.3 km,2.5 km,5 km,10 km,20 km,40 km,80 km"; }
 		}
 
 		// Get tile size by X

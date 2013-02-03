@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeocodingServerGeocoderUS", "GeocodingServerGeocoderUS\GeocodingServerGeocoderUS.csproj", "{277AA26E-9BB5-487E-B910-7CDF989D6C48}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeocodingServerVirtualEarth", "GeocodingServerVirtualEarth\GeocodingServerVirtualEarth.csproj", "{56B5C3CC-5647-411A-8234-8D6F6C8F77AC}"
@@ -18,6 +18,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageServerYandex", "ImageServerYandex\ImageServerYandex.csproj", "{0B7813B6-7B70-4169-8D0F-254641D2169B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageServerAcetate", "ImageServerAcetate\ImageServerAcetate.csproj", "{4C295591-EF39-4095-92C0-88E7FD3058B6}"
+	ProjectSection(ProjectDependencies) = postProject
+		{841B0455-B93F-4FDC-A460-11B57676B347} = {841B0455-B93F-4FDC-A460-11B57676B347}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

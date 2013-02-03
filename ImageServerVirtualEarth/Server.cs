@@ -269,9 +269,9 @@ namespace Manifold.ImageServer.VirtualEarth
 			}
 
 			if (m_strDefaultUrl == m_strUrl)
-                strRequest = m_strUrlsArray[nServer] + m_strMapType + strKey + "?g=516&mkt=en-us&n=z" + m_strUrlOpts;
+                strRequest = m_strUrlsArray[nServer] + m_strMapType + strKey + ".jpeg?g=516&mkt=en-us&n=z" + m_strUrlOpts;
 			else // custom url
-                strRequest = m_strUrl + m_strMapType + strKey + "?g=516&mkt=en-us&n=z" + m_strUrlOpts;
+                strRequest = m_strUrl + m_strMapType + strKey + ".jpeg?g=516&mkt=en-us&n=z" + m_strUrlOpts;
 
             String tileInfo = "Url " + strRequest + ". ";
 
@@ -410,7 +410,7 @@ namespace Manifold.ImageServer.VirtualEarth
 		// Get scale names separated by commas
 		public String ScaleNames
 		{
-			get { return "0.125 m, 0.25 m,0.5 m,1 m,2 m,5 m,10 m,20 m,40 m,80 m,160 m,320 m,640 m,1.3 km,2.5 km,5 km,10 km,20 km,40 km,80 km"; }
+			get { return "0.1 m,0.3 m,0.5 m,1 m,2 m,5 m,10 m,20 m,40 m,80 m,160 m,320 m,640 m,1.3 km,2.5 km,5 km,10 km,20 km,40 km,80 km"; }
 		}
 
 		// Get tile size by X

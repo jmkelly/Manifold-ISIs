@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Manifold.ImageServer;
-using Manifold.ImageServer.OpenStreetMaps;
+﻿using Manifold.ImageServer.OpenStreetMaps;
 
 namespace Manifold.ImageServer.Acetate
 {

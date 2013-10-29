@@ -9,47 +9,43 @@ using System.Net;
 using System.Text;
 using System.Xml;
 using System.Net.Cache;
-using System.Windows.Forms;
 
 namespace Manifold.ImageServer.OpenStreetMaps
 {
     public abstract class ServerOpenStreetMaps : IServer
     {
-        private String _name;
         private String _defaultUrl; 
         private String _url;
-        private String _imageType;
-        private String _coordinateSystemXml;
-        private String _error;
-        private String _scaleNames;
+        private readonly String _imageType;
+        private readonly String _coordinateSystemXml;
         private String _proxyAddress;
         private String _proxyPassword;
         private String _proxyUserName;
         private Int32 _scaleLo;
         private Int32 _scaleHi;
-        private Int32 _tileSizeX;
-        private Int32 _tileSizeY;
+        private readonly Int32 _tileSizeX;
+        private readonly Int32 _tileSizeY;
 
-        private static readonly Int32 EarthRadius = 6378137;
+        private const Int32 EarthRadius = 6378137;
 
-        public ServerOpenStreetMaps(Int32 scaleHi)
+        protected ServerOpenStreetMaps(Int32 scaleHi)
         {
-            _name = "";
+            Name = "";
             _defaultUrl = "";
             _url = _defaultUrl;
-            _scaleNames = "";
+            ScaleNames = "";
             _imageType = ".png";
             _scaleLo = 1;
             _scaleHi = scaleHi;
             _tileSizeX = 256;
             _tileSizeY = 256;
-            _error = "";
+            Error = "";
 
             // coordinate system scale and offset
             {
                 Double imageSize = (1 << _scaleHi) * _tileSizeX;
                 Double scale = (2 * EarthRadius * Math.PI) / imageSize;
-                Double offset = EarthRadius * Math.PI;
+                const double offset = EarthRadius * Math.PI;
 
                 // save coordinate system in xml format
                 XmlWriterSettings settings = new XmlWriterSettings();
@@ -92,7 +88,7 @@ namespace Manifold.ImageServer.OpenStreetMaps
         {
             scale = _scaleHi - scale + 1;
             String url = GetTileUrl(x, y, scale);
-            String tileInfo = "";
+            const string tileInfo = "";
             try
             {
                 // initialize request
@@ -103,11 +99,11 @@ namespace Manifold.ImageServer.OpenStreetMaps
 
                 // process response
                 String strType = response.ContentType;
-                Int32 nIndex = strType.IndexOf("image");
+                Int32 nIndex = strType.IndexOf("image", System.StringComparison.Ordinal);
                 if (nIndex > -1)
                 {
                     Image image = Image.FromStream(response.GetResponseStream());
-                    if (filename != null && filename.Length != 0)
+                    if (!string.IsNullOrEmpty(filename))
                         image.Save(filename, ImageFormat.Png);
                 }
                 else
@@ -117,10 +113,10 @@ namespace Manifold.ImageServer.OpenStreetMaps
                     String error = objReader.ReadToEnd();
                     objReader.Close();
 
-                    if (error == null || error.Length == 0)
+                    if (error.Length == 0)
                         error = "Can't obtain image from server";
 
-                    _error = tileInfo + error;
+                    Error = tileInfo + error;
 
                     response.Close();
                     return false;
@@ -131,12 +127,12 @@ namespace Manifold.ImageServer.OpenStreetMaps
             }
             catch (WebException we)
             {
-                _error = tileInfo + we.Message;
+                Error = tileInfo + we.Message;
                 return false;
             }
             catch (Exception e)
             {
-                _error = tileInfo + e.Message;
+                Error = tileInfo + e.Message;
                 throw;
             }
         }
@@ -155,10 +151,10 @@ namespace Manifold.ImageServer.OpenStreetMaps
         public IRectangle GetRectTiles(Int32 scale, IRectangleD rect)
         {
             IRectangle rectTiles = GetRectPixels(scale, rect);
-            rectTiles.XMin = (Int32)(rectTiles.XMin / _tileSizeX);
-            rectTiles.YMin = (Int32)(rectTiles.YMin / _tileSizeY);
-            rectTiles.XMax = (Int32)(rectTiles.XMax / _tileSizeX);
-            rectTiles.YMax = (Int32)(rectTiles.YMax / _tileSizeY);
+            rectTiles.XMin = rectTiles.XMin / _tileSizeX;
+            rectTiles.YMin = rectTiles.YMin / _tileSizeY;
+            rectTiles.XMax = rectTiles.XMax / _tileSizeX;
+            rectTiles.YMax = rectTiles.YMax / _tileSizeY;
             return rectTiles;
         }
 
@@ -173,13 +169,10 @@ namespace Manifold.ImageServer.OpenStreetMaps
             protected set { _defaultUrl = value; _url = value; }
         }
         // Obtain last error
-        public String Error { get { return _error; } }
+        public string Error { get; private set; }
         // Get name
-        public String Name 
-        { 
-            get { return _name; }
-            protected set { _name = value; }
-        }
+        public string Name { get; protected set; }
+
         // Get or set proxy address
         public String ProxyAddress
         {
@@ -213,11 +206,8 @@ namespace Manifold.ImageServer.OpenStreetMaps
             protected set { _scaleLo = value; } 
         }
         // Get scale names separated by commas
-        public String ScaleNames
-        {
-            get { return _scaleNames; }
-            protected set { _scaleNames = value; }
-        }
+        public string ScaleNames { get; protected set; }
+
         // Get tile size by X
         public Int32 TileSizeX { get { return _tileSizeX; } }
         // Get tile size by Y
@@ -238,7 +228,7 @@ namespace Manifold.ImageServer.OpenStreetMaps
 
             // set user name and password
             String strUserInfo = request.RequestUri.UserInfo;
-            if (strUserInfo != null && strUserInfo.Length != 0)
+            if (strUserInfo.Length != 0)
             {
                 // send credentials with the request
                 request.PreAuthenticate = true;
@@ -247,7 +237,7 @@ namespace Manifold.ImageServer.OpenStreetMaps
                 String strPassword = "";
 
                 // try to find password token
-                int index = strUserInfo.IndexOf(":");
+                int index = strUserInfo.IndexOf(":", System.StringComparison.Ordinal);
                 if (index > -1)
                 {
                     strUsername = strUserInfo.Substring(0, index);
@@ -283,15 +273,17 @@ namespace Manifold.ImageServer.OpenStreetMaps
                 }
                 else
                 {
-                    IWebProxy proxySystem = HttpWebRequest.GetSystemWebProxy();
+                    IWebProxy proxySystem = WebRequest.GetSystemWebProxy();
 
                     // supply proxy if URL is not bypassed
                     if (!proxySystem.IsBypassed(new Uri(_url)))
                     {
-                        WebProxy proxy = new WebProxy(proxySystem.GetProxy(new Uri(_url)));
+                        WebProxy proxy = new WebProxy(proxySystem.GetProxy(new Uri(_url)))
+                        {
+                            UseDefaultCredentials = true
+                        };
 
                         // use default credentials
-                        proxy.UseDefaultCredentials = true;
 
                         request.Proxy = proxy;
                     }
@@ -387,18 +379,4 @@ namespace Manifold.ImageServer.OpenStreetMaps
 
         }
     }
-
-    public abstract class AcetateHillshade : ServerOpenStreetMaps 
-        {
-            public AcetateHillshade()
-                : base(18)
-            {
-                Name = "GeoIQ Hillshade Acetate Images";
-                DefaultURL = "http://acetate.geoiq.com/tiles/hillshading";
-                ScaleNames = "0.5 m,1 m,2 m,5 m,10 m,20 m,40 m,80 m,160 m,320 m,640 m,1.3 km,2.5 km,5 km,10 km,20 km,40 km,80 km";
-            }
-        }
-    
-
-
 }

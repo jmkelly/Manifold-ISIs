@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Text;
-using Manifold.ImageServer;
 using System.Xml;
 using System.IO;
 using System.Net;
@@ -11,11 +9,9 @@ using System.Drawing.Imaging;
 
 namespace Manifold.ImageServer.TMS
 {
-    public class ServerTMS:IServer
+    public class TmsServer:IServer
     {
-
-        //variables
-        private string m_CoordinateSystem;
+        private string _coordinateSystem;
         string m_DefaultImageType;
         string m_DefaultURL;
         string m_Error;
@@ -30,12 +26,14 @@ namespace Manifold.ImageServer.TMS
         protected String m_strProxyUserName;
         protected String m_strUrl;
 
-        public ServerTMS()
+        public TmsServer()
         {
-            XmlWriterSettings settings = new XmlWriterSettings();
-            settings.OmitXmlDeclaration = true;
-            settings.Encoding = Encoding.UTF8;
-            settings.Indent = true;
+            XmlWriterSettings settings = new XmlWriterSettings
+            {
+                OmitXmlDeclaration = true,
+                Encoding = Encoding.UTF8,
+                Indent = true
+            };
 
             StringWriter strWriter = new StringWriter();
             XmlWriter writer = XmlWriter.Create(strWriter, settings);
@@ -52,7 +50,7 @@ namespace Manifold.ImageServer.TMS
             writer.Flush();
             writer.Close();
 
-            m_CoordinateSystem = strWriter.ToString();
+            _coordinateSystem = strWriter.ToString();
             strWriter.Close();
             m_DefaultImageType = ".png";
             m_ReverseY = false;
@@ -70,7 +68,7 @@ namespace Manifold.ImageServer.TMS
         public string CoordinateSystem
         {
             get { 
-                return m_CoordinateSystem; 
+                return _coordinateSystem; 
             }
         }
 
@@ -151,15 +149,16 @@ namespace Manifold.ImageServer.TMS
        
 
 
-        public virtual bool DownloadTile(int _x, int _y, int _scale, string _filename)
+        public virtual bool DownloadTile(int x, int y, int scale, string filename)
         {
-            Int32 z = ConvertZoomToManifoldScale(_scale);
+            Int32 z = ConvertZoomToManifoldScale(scale);
           
             String strRequest;
             if (m_DefaultURL == m_strUrl)
             {
                 //request image from standard request
-                TileImage img = new TileImage(_x, _y, z, _filename);
+                TileImage img = new TileImage(x, y, z, filename);
+                img.Save();
                 return true;
 
             }
@@ -167,8 +166,8 @@ namespace Manifold.ImageServer.TMS
             {
                 //custom request
                 strRequest = m_strUrl + z.ToString(CultureInfo.InvariantCulture);
-                strRequest += "/" + _x.ToString(CultureInfo.InvariantCulture);
-                strRequest += "/" + _y.ToString(CultureInfo.InvariantCulture);
+                strRequest += "/" + x.ToString(CultureInfo.InvariantCulture);
+                strRequest += "/" + y.ToString(CultureInfo.InvariantCulture);
                 strRequest += DefaultImageType;
                 try
                 {
@@ -189,8 +188,8 @@ namespace Manifold.ImageServer.TMS
                         PixelFormat pixelFormat = image.PixelFormat;
                         Bitmap bitmap = new Bitmap(image);
 
-                        if (_filename != null && _filename.Length != 0)
-                            bitmap.Save(_filename, ImageFormat.Png);
+                        if (filename != null && filename.Length != 0)
+                            bitmap.Save(filename, ImageFormat.Png);
 
                     }
                     else
@@ -203,7 +202,7 @@ namespace Manifold.ImageServer.TMS
                         if (error == null || error.Length == 0)
                             error = "Can't obtain image from server";
 
-                        m_Error =  error + " tile:" + _x.ToString() + "," + _y.ToString() + "," + z.ToString();
+                        m_Error =  error + " tile:" + x.ToString() + "," + y.ToString() + "," + z.ToString();
 
                         response.Close();
                         return false;
@@ -215,12 +214,12 @@ namespace Manifold.ImageServer.TMS
                 }
                 catch (WebException we)
                 {
-                    m_Error = we.Message + " tile:" + _x.ToString() + "," + _y.ToString() + "," + z.ToString();
+                    m_Error = we.Message + " tile:" + x.ToString() + "," + y.ToString() + "," + z.ToString();
                     return false;
                 }
                 catch (Exception e)
                 {
-                    m_Error = e.Message + "tile:" + _x.ToString() + "," + _y.ToString() + "," + z.ToString();
+                    m_Error = e.Message + "tile:" + x.ToString() + "," + y.ToString() + "," + z.ToString();
                     throw;
                 }
            

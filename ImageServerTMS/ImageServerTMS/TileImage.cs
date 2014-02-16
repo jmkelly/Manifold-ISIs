@@ -1,30 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Drawing.Imaging;
-using System.Drawing.Text;
 
 
 namespace Manifold.ImageServer.TMS
 {
     public class TileImage
     {
-
-
-
-        public TileImage(int _x, int _y, int _scale, string _filename)
+        public readonly Bitmap Pic;
+        public TileImage(int x, int y, int scale, string filename)
         {
-            X = _x;
-            Y = _y;
-            Scale  = _scale;
-            FileName  = _filename;
+            X = x;
+            Y = y;
+            Scale  = scale;
+            FileName  = filename;
 
-            Int32 Width = 256;
-            Int32 Height = 256;
-            RectangleF RectF = new RectangleF(0, 0, Width, Height);
-            Bitmap Pic = new Bitmap(Width, Height, PixelFormat.Format24bppRgb);
+            const int width = 256;
+            const int height = 256;
+            RectangleF rectF = new RectangleF(0, 0, width, height);
+            Pic = new Bitmap(width, height, PixelFormat.Format24bppRgb);
             Graphics g = Graphics.FromImage(Pic);
             g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
             
@@ -32,26 +25,26 @@ namespace Manifold.ImageServer.TMS
             Color rectColor = Color.White;
             SolidBrush fgBrush = new SolidBrush(fontColor);
             SolidBrush bgBrush = new SolidBrush(rectColor);
-            g.FillRectangle(bgBrush, RectF);
+            g.FillRectangle(bgBrush, rectF);
             Pen pen = new Pen(Color.Blue);
-            g.DrawRectangle(pen, 0, 0, Width - 1, Height - 1);
-            string text = "xyz=" + _x.ToString() + "," + _y.ToString() + "," + _scale.ToString(); 
+            g.DrawRectangle(pen, 0, 0, width - 1, height - 1);
+            string text = string.Format("xyz={0},{1},{2}",  x, y, scale); 
             FontFamily fontFamily = new FontFamily("Arial");
             Font font = new Font(fontFamily,18,FontStyle.Regular,GraphicsUnit.Pixel);
-            g.DrawString(text, font, fgBrush, RectF);
-            
-            if (_filename != null && _filename.Length != 0)
-                Pic.Save(_filename, ImageFormat.Png);
+            g.DrawString(text, font, fgBrush, rectF);
+        }
 
-
-
+        public void Save()
+        {
+            if (!string.IsNullOrEmpty(FileName))
+                Pic.Save(FileName, ImageFormat.Png);
             
         }
 
-        public int X { get; set; }
-        public int Y { get; set; }
-        public int Scale { get; set; }
-        public string FileName { get; set; }
+        public int X { get; private set; }
+        public int Y { get; private set; }
+        public int Scale { get; private set; }
+        public string FileName { get; private set; }
          
     }
 }

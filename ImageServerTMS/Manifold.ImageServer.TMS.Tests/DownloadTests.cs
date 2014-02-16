@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Text;
 using NUnit.Framework;
-using Manifold.ImageServer;
-using Manifold.ImageServer.TMS;
 using System.Xml;
 using System.IO;
 
@@ -11,21 +7,23 @@ namespace Manifold.ImageServer.TMS.Tests
 {
     class DownloadTests
     {
-        ServerTMS _Server;
-        string _CoordinateSystem;
+        TmsServer _server;
+        string _coordinateSystem;
 
         [SetUp]
-        public void init()
+        public void Init()
         {
-            _Server = new ServerTMS();
+            _server = new TmsServer();
             //TileSizeX = 256;
             //TileSizeY = 256;
 
             // save coordinate system in xml format
-            XmlWriterSettings settings = new XmlWriterSettings();
-            settings.OmitXmlDeclaration = true;
-            settings.Encoding = Encoding.UTF8;
-            settings.Indent = true;
+            XmlWriterSettings settings = new XmlWriterSettings
+            {
+                OmitXmlDeclaration = true,
+                Encoding = Encoding.UTF8,
+                Indent = true
+            };
 
             StringWriter strWriter = new StringWriter();
             XmlWriter writer = XmlWriter.Create(strWriter, settings);
@@ -42,15 +40,15 @@ namespace Manifold.ImageServer.TMS.Tests
             writer.Flush();
             writer.Close();
 
-            _CoordinateSystem = strWriter.ToString();
+            _coordinateSystem = strWriter.ToString();
             strWriter.Close();
         }
 
         [Test]
         public void DownloadTileTest()
         {
-            _Server.URL = "http://localhost/j5412/";
-            Assert.AreEqual(true, _Server.DownloadTile(459, 196, 12, "c:\\temp\\temp.png"));
+            _server.URL = "http://localhost/j5412/";
+            Assert.AreEqual(true, _server.DownloadTile(459, 196, 12, "c:\\temp\\temp.png"));
         }
     }
 

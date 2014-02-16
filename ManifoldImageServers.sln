@@ -1,6 +1,8 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeocodingServerGeocoderUS", "GeocodingServerGeocoderUS\GeocodingServerGeocoderUS.csproj", "{277AA26E-9BB5-487E-B910-7CDF989D6C48}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeocodingServerVirtualEarth", "GeocodingServerVirtualEarth\GeocodingServerVirtualEarth.csproj", "{56B5C3CC-5647-411A-8234-8D6F6C8F77AC}"
@@ -13,9 +15,24 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageServerWikiMapia", "Ima
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageServerYandex", "ImageServerYandex\ImageServerYandex.csproj", "{0B7813B6-7B70-4169-8D0F-254641D2169B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageServerAcetate", "ImageServerAcetate\ImageServerAcetate.csproj", "{4C295591-EF39-4095-92C0-88E7FD3058B6}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ImageServerTMS", "ImageServerTMS", "{08118717-13C3-4B55-8C72-6073B99398C0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageServer.Localhost", "ImageServerTMS\ImageServer.Localhost\ImageServer.Localhost.csproj", "{9E70E46B-447D-4D05-AD7E-543F4B102061}"
 	ProjectSection(ProjectDependencies) = postProject
-		{841B0455-B93F-4FDC-A460-11B57676B347} = {841B0455-B93F-4FDC-A460-11B57676B347}
+		{C1F2A075-A6EB-46CB-9444-31123D5E55FC} = {C1F2A075-A6EB-46CB-9444-31123D5E55FC}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageServerTMS", "ImageServerTMS\ImageServerTMS\ImageServerTMS.csproj", "{C1F2A075-A6EB-46CB-9444-31123D5E55FC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageServerTMS.Tests", "ImageServerTMS\Manifold.ImageServer.TMS.Tests\ImageServerTMS.Tests.csproj", "{7A25B80F-D182-4325-9747-EEC8E9364167}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9E70E46B-447D-4D05-AD7E-543F4B102061} = {9E70E46B-447D-4D05-AD7E-543F4B102061}
+		{C1F2A075-A6EB-46CB-9444-31123D5E55FC} = {C1F2A075-A6EB-46CB-9444-31123D5E55FC}
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{30F37CB1-E726-4BB2-B2B5-30A716242ED0}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\packages.config = .nuget\packages.config
 	EndProjectSection
 EndProject
 Global
@@ -48,12 +65,25 @@ Global
 		{0B7813B6-7B70-4169-8D0F-254641D2169B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0B7813B6-7B70-4169-8D0F-254641D2169B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0B7813B6-7B70-4169-8D0F-254641D2169B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4C295591-EF39-4095-92C0-88E7FD3058B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4C295591-EF39-4095-92C0-88E7FD3058B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4C295591-EF39-4095-92C0-88E7FD3058B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4C295591-EF39-4095-92C0-88E7FD3058B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E70E46B-447D-4D05-AD7E-543F4B102061}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E70E46B-447D-4D05-AD7E-543F4B102061}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E70E46B-447D-4D05-AD7E-543F4B102061}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E70E46B-447D-4D05-AD7E-543F4B102061}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1F2A075-A6EB-46CB-9444-31123D5E55FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1F2A075-A6EB-46CB-9444-31123D5E55FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1F2A075-A6EB-46CB-9444-31123D5E55FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1F2A075-A6EB-46CB-9444-31123D5E55FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A25B80F-D182-4325-9747-EEC8E9364167}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A25B80F-D182-4325-9747-EEC8E9364167}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A25B80F-D182-4325-9747-EEC8E9364167}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A25B80F-D182-4325-9747-EEC8E9364167}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9E70E46B-447D-4D05-AD7E-543F4B102061} = {08118717-13C3-4B55-8C72-6073B99398C0}
+		{C1F2A075-A6EB-46CB-9444-31123D5E55FC} = {08118717-13C3-4B55-8C72-6073B99398C0}
+		{7A25B80F-D182-4325-9747-EEC8E9364167} = {08118717-13C3-4B55-8C72-6073B99398C0}
 	EndGlobalSection
 EndGlobal

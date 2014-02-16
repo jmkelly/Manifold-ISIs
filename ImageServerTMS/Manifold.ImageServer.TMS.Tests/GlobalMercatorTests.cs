@@ -1,51 +1,46 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using NUnit.Framework;
-using Manifold.ImageServer;
-using Manifold.ImageServer.TMS;
 
 namespace Manifold.ImageServer.TMS.Tests
 {
     [TestFixture]
     class GlobalMercatorTests
     {
-        GlobalMercator globalMercator;
-        PointD latitudeLongitudePoint;
-        PointD mercatorPoint;
+        GlobalMercator _globalMercator;
+        PointD _latitudeLongitudePoint;
+        PointD _mercatorPoint;
 
         [SetUp]
-        public void init()
+        public void Init()
         {
-            globalMercator = new GlobalMercator();
-            latitudeLongitudePoint = new PointD(143.068055770704, -38.4537515036619);
-            mercatorPoint = new PointD(15926263.117, -4643725.484);
+            _globalMercator = new GlobalMercator();
+            _latitudeLongitudePoint = new PointD(143.068055770704, -38.4537515036619);
+            _mercatorPoint = new PointD(15926263.117, -4643725.484);
            
         }
 
         [Test]
         public void TileSizeTest()
         {
-            Assert.AreEqual(256, globalMercator.TileSize);
+            Assert.AreEqual(256, _globalMercator.TileSize);
         }
 
         [Test]
         public void InitialResolutionTest()
         {
-            Assert.AreEqual((2 * Math.PI * 6378137) / globalMercator.TileSize, globalMercator.InitialResolution);
+            Assert.AreEqual((2 * Math.PI * 6378137) / _globalMercator.TileSize, _globalMercator.InitialResolution);
         }
         [Test]
         public void OriginShiftTest()
         {
-            Assert.AreEqual((2 * Math.PI * 6378137) / 2.0, globalMercator.OriginShift);
+            Assert.AreEqual((2 * Math.PI * 6378137) / 2.0, _globalMercator.OriginShift);
         }
 
         [Test]
         public void MercatorToPixelsX()
         {
             Point expected = new Point(459, 197);
-            Point actual = globalMercator.GetPixels(mercatorPoint,1);
+            Point actual = _globalMercator.GetPixels(_mercatorPoint,1);
             Assert.AreEqual(expected.X,actual.X );
         }
 
@@ -53,14 +48,14 @@ namespace Manifold.ImageServer.TMS.Tests
         public void MercatorToPixelsY()
         {
             Point expected = new Point(459, 196);
-            Point actual = globalMercator.GetPixels(mercatorPoint, 1);
+            Point actual = _globalMercator.GetPixels(_mercatorPoint, 1);
             Assert.AreEqual(expected.Y, actual.Y);
         }
 
         public void ResolutionTest()
         {
-            Double result = 2 * Math.PI * 6378137 / globalMercator.TileSize  / Math.Pow(2, 0);
-            Assert.AreEqual(result,globalMercator.Resolution(0));
+            Double result = 2 * Math.PI * 6378137 / _globalMercator.TileSize  / Math.Pow(2, 0);
+            Assert.AreEqual(result,_globalMercator.Resolution(0));
         }
 
         [Test]
@@ -68,14 +63,14 @@ namespace Manifold.ImageServer.TMS.Tests
         {
             
             PointD expected = new PointD(15926263.117, -4643725.484);
-            Assert.AreEqual(expected.X, Math.Round(mercatorPoint.X,3));
+            Assert.AreEqual(expected.X, Math.Round(_mercatorPoint.X,3));
            
         }
         [Test]
         public void LatLonToMercatorY()
         {
             PointD expected = new PointD(15926263.117, -4643725.484);
-            Assert.AreEqual(expected.Y, Math.Round(mercatorPoint.Y,3));
+            Assert.AreEqual(expected.Y, Math.Round(_mercatorPoint.Y,3));
         }
 
         [Test]
@@ -83,14 +78,14 @@ namespace Manifold.ImageServer.TMS.Tests
         {
             Point p = new Point(459, 197);
             PointD pM = new PointD(15926263.117, -4643725.484);
-            Assert.AreEqual(p.X, globalMercator.GetBitmapCoord(pM, 1).X);
+            Assert.AreEqual(p.X, _globalMercator.GetBitmapCoord(pM, 1).X);
         }
         [Test]
         public void BitmapPointTestY()
         {
             Point p = new Point(459, 197);
             PointD pM = new PointD(15926263.117, -4643725.484);
-            Assert.AreEqual(p.Y, globalMercator.GetBitmapCoord(pM, 1).Y);
+            Assert.AreEqual(p.Y, _globalMercator.GetBitmapCoord(pM, 1).Y);
         }
 
        
@@ -101,7 +96,7 @@ namespace Manifold.ImageServer.TMS.Tests
 
             Point pixelCoordinate = new Point(459, 196);
             Point expected = new Point(1, 0);
-            Point actual = globalMercator.GetTile(pixelCoordinate);
+            Point actual = _globalMercator.GetTile(pixelCoordinate);
             Assert.AreEqual(expected.X, actual.X);
         }
         [Test]
@@ -110,7 +105,7 @@ namespace Manifold.ImageServer.TMS.Tests
 
             Point pixelCoordinate = new Point(459, 196);
             Point expected = new Point(1, 0);
-            Point actual = globalMercator.GetTile(pixelCoordinate);
+            Point actual = _globalMercator.GetTile(pixelCoordinate);
             Assert.AreEqual(expected.Y, actual.Y);
         }
     }

@@ -1,35 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Text;
 using NUnit.Framework;
-using Manifold.ImageServer;
-using Manifold.ImageServer.TMS;
 using System.Xml;
 using System.IO;
 
 namespace Manifold.ImageServer.TMS.Tests
 {   
-
-
     [TestFixture]
     public class PropertyTests
     {
-        ServerTMS _Server;
-        string _CoordinateSystem;
+        TmsServer _server;
+        string _coordinateSystem;
 
 
         [SetUp]
-        public void init()
+        public void Init()
         {
-            _Server = new ServerTMS();
-            //TileSizeX = 256;
-            //TileSizeY = 256;
-
-            // save coordinate system in xml format
-            XmlWriterSettings settings = new XmlWriterSettings();
-            settings.OmitXmlDeclaration = true;
-            settings.Encoding = Encoding.UTF8;
-            settings.Indent = true;
+            _server = new TmsServer();
+            XmlWriterSettings settings = new XmlWriterSettings
+            {
+                OmitXmlDeclaration = true,
+                Encoding = Encoding.UTF8,
+                Indent = true
+            };
 
             StringWriter strWriter = new StringWriter();
             XmlWriter writer = XmlWriter.Create(strWriter, settings);
@@ -46,138 +38,116 @@ namespace Manifold.ImageServer.TMS.Tests
             writer.Flush();
             writer.Close();
 
-            _CoordinateSystem = strWriter.ToString();
+            _coordinateSystem = strWriter.ToString();
             strWriter.Close();
         }
 
         [Test]
         public void CoordinateSystemTest()
         {
-            Assert.AreEqual(_CoordinateSystem, _Server.CoordinateSystem);
+            Assert.AreEqual(_coordinateSystem, _server.CoordinateSystem);
         }
 
         [Test]
         public void TileSizeXTest()
         {
-            Assert.AreEqual(256, _Server.TileSizeX);
+            Assert.AreEqual(256, _server.TileSizeX);
         }
 
         [Test]
         public void TileSizeYTest()
         {
-            Assert.AreEqual(256, _Server.TileSizeY);
+            Assert.AreEqual(256, _server.TileSizeY);
         }
 
         [Test]
         public void DefaultImageTypeTest()
         {
-            Assert.AreEqual(".png", _Server.DefaultImageType); 
+            Assert.AreEqual(".png", _server.DefaultImageType); 
         }
 
         [Test]
-        public void DefaultURLTest()
+        public void DefaultUrlTest()
         {
-            Assert.AreEqual("http://", _Server.DefaultURL);
+            Assert.AreEqual("http://", _server.DefaultURL);
         }
         [Test]
         public void ScaleHiTest()
         {
-            Assert.AreEqual(21, _Server.ScaleHi);
+            Assert.AreEqual(21, _server.ScaleHi);
         }
 
         [Test]
         public void ScaleLoTest()
         {
-            Assert.AreEqual(0, _Server.ScaleLo);
+            Assert.AreEqual(0, _server.ScaleLo);
         }
 
         [Test]
         public void ReverseYTest()
         {
-            Assert.AreEqual(false, _Server.ReverseY);
+            Assert.AreEqual(false, _server.ReverseY);
         }
 
         [Test]
         public void CreateTile()
         {
-            int x = 1;
-            int y = 1;
-            int z = 1;
-            string fileName = "c:\\temp\\000.png";
+            const int x = 1;
+            const int y = 1;
+            const int z = 1;
+            const string fileName = "c:\\temp\\000.png";
             TileImage t = new TileImage(x, y, z, fileName);
             Assert.AreEqual(1, t.X);
-            
         }
 
         [Test]
         public void StrRequestTest()
         {
-            string expected = "http://localhost/j5412/21/0/0.png";
-
-                _Server.URL = "http://localhost/j5412/";
-               string actual = _Server.StringRequest(0,0,0);
+            const string expected = "http://localhost/j5412/21/0/0.png";
+                _server.URL = "http://localhost/j5412/";
+               string actual = _server.StringRequest(0,0,0);
                Assert.AreEqual(expected, actual);
                 }
 
         [Test]
         public void HttpRequestTest()
         {
-            
-
-            _Server.URL = "http://localhost/j5412/";
-            string request = _Server.StringRequest(0, 0, 0);
-            bool actual = _Server.httpRequestSuccess(request);
+            _server.URL = "http://localhost/j5412/";
+            string request = _server.StringRequest(0, 0, 0);
+            bool actual = _server.httpRequestSuccess(request);
             Assert.AreEqual(true, actual);
         }
         [Test]
         public void HttpResponseTest()
         {
 
-            _Server.URL = "http://localhost/j5412/";
-            bool actual = _Server.HttpResponseSuccess(459,196,12);
+            _server.URL = "http://localhost/j5412/";
+            bool actual = _server.HttpResponseSuccess(459,196,12);
             Assert.AreEqual(true, actual);
         }
 
         [Test]
         public void DownloadTileTest()
         {
-            _Server.URL = "http://localhost/j5412/";
-            bool actual = _Server.DownloadTile(459, 196, 12, "c:\\temp\\test.png");
-            bool expected = true;
-            Assert.AreEqual(expected, actual);
+            _server.URL = "http://localhost/j5412/";
+            bool actual = _server.DownloadTile(459, 196, 12, "c:\\temp\\test.png");
+            Assert.AreEqual(true, actual);
         }
         [Test]
-        public void TMSScaleTestMax()
+        public void TmsScaleTestMax()
         {
-            _Server.ZoomLevelMaximum = 18;
-            Int32 expected = 3;
-            int actual = _Server.ScaleLo;
+            _server.ZoomLevelMaximum = 18;
+            const int expected = 3;
+            int actual = _server.ScaleLo;
             Assert.AreEqual(expected,actual);
         }
         [Test]
-        public void TMSScaleTestMin()
+        public void TmsScaleTestMin()
         {
-            _Server.ZoomLevelMinimum = 3;
-            Int32 expected = 18;
-            int actual = _Server.ScaleHi;
+            _server.ZoomLevelMinimum = 3;
+            const int expected = 18;
+            int actual = _server.ScaleHi;
             Assert.AreEqual(expected, actual);
         }
-
-            
-        
-
-       //     Assert.AreEqual(459, p.X);
-        //}
-        //[Test]
-        //public void GetBitmapCoordinateYTest()
-        //{
-        //    PointD pM = new PointD(15926263.117, -4643725.484);
-        //    Point p = _Server.GetBitmapCoordinate(pM, 19);
-        //    Assert.AreEqual(196, p.Y);
-        //}  
-
-        
-
-            
     }
 }

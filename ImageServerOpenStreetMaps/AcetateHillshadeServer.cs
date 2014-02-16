@@ -1,12 +1,8 @@
-﻿using Manifold.ImageServer.OpenStreetMaps;
-
-namespace Manifold.ImageServer.Acetate
+﻿namespace Manifold.ImageServer.OpenStreetMaps
 {
-   
-    
-        public class AcetateHillshade : Server 
+        public class AcetateHillshadeServer : Server 
         {
-            public AcetateHillshade()
+            public AcetateHillshadeServer()
                 : base(18)
             {
                 Name = "GeoIQ Hillshade Acetate Images";

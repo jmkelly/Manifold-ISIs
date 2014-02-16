@@ -1,8 +1,8 @@
 namespace Manifold.ImageServer.OpenStreetMaps
 {
-    public class ServerOsmarender : Server
+    public class OsmarenderServer : Server
     {
-        public ServerOsmarender() : base(17)
+        public OsmarenderServer() : base(17)
         {
             Name = "OpenStreet Maps Street Map Image / Osmarender";
             DefaultURL = "http://tah.openstreetmap.org/Tiles/tile";

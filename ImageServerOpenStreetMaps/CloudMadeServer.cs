@@ -2,9 +2,9 @@ using System;
 
 namespace Manifold.ImageServer.OpenStreetMaps
 {
-    public class ServerCloudMade : Server
+    public class CloudMadeServer : Server
     {
-        public ServerCloudMade()
+        public CloudMadeServer()
             : base(18)
         {
             //http://developers.cloudmade.com/projects/web-maps-lite/examples

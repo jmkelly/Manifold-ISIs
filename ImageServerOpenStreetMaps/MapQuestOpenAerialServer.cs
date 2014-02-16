@@ -1,8 +1,8 @@
 namespace Manifold.ImageServer.OpenStreetMaps
 {
-    public class ServerMapQuestOpenAerial : Server
+    public class MapQuestOpenAerialServer : Server
     {
-        public ServerMapQuestOpenAerial()
+        public MapQuestOpenAerialServer()
             : base(18)
         {
             Name = "MapQuest Open Aerial Images";

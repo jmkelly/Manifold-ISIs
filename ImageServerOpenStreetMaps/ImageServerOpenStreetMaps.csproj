@@ -47,14 +47,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AcetateHillshadeServer.cs" />
     <Compile Include="Server.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ServerCloudMadeMaps.cs" />
-    <Compile Include="ServerCycleMaps.cs" />
-    <Compile Include="ServerMapQuestOpenAerial.cs" />
-    <Compile Include="ServerMapQuestOsmMaps.cs" />
-    <Compile Include="ServerMapnik.cs" />
-    <Compile Include="ServerOsmarender.cs" />
+    <Compile Include="CloudMadeServer.cs" />
+    <Compile Include="CycleMapsServer.cs" />
+    <Compile Include="MapQuestOpenAerialServer.cs" />
+    <Compile Include="MapQuestOpenServer.cs" />
+    <Compile Include="MapnikServer.cs" />
+    <Compile Include="OsmarenderServer.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

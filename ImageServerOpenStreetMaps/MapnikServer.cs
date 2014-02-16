@@ -1,8 +1,8 @@
 namespace Manifold.ImageServer.OpenStreetMaps
 {
-    public class ServerMapnik : Server
+    public class MapnikServer : Server
     {
-        public ServerMapnik() : base(18)
+        public MapnikServer() : base(18)
         {
             // http://www.openstreetmap.org/
             // http://wiki.openstreetmap.org/wiki/Slippy_map_tilenames

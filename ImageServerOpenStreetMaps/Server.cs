@@ -12,7 +12,7 @@ using System.Net.Cache;
 
 namespace Manifold.ImageServer.OpenStreetMaps
 {
-    public abstract class ServerOpenStreetMaps : IServer
+    public abstract class Server : IServer
     {
         private String _defaultUrl; 
         private String _url;
@@ -28,7 +28,7 @@ namespace Manifold.ImageServer.OpenStreetMaps
 
         private const Int32 EarthRadius = 6378137;
 
-        protected ServerOpenStreetMaps(Int32 scaleHi)
+        protected Server(Int32 scaleHi)
         {
             Name = "";
             _defaultUrl = "";
@@ -299,84 +299,6 @@ namespace Manifold.ImageServer.OpenStreetMaps
             }
 
             return request;
-        }
-    }
-
-    public class ServerOpenStreetMapsMapnik : ServerOpenStreetMaps
-    {
-        public ServerOpenStreetMapsMapnik() : base(18)
-        {
-            // http://www.openstreetmap.org/
-            // http://wiki.openstreetmap.org/wiki/Slippy_map_tilenames
-            // http://wiki.openstreetmap.org/wiki/Mapnik
-
-            Name = "OpenStreet Maps Street Map Image / Mapnik";
-            DefaultURL = "http://tile.openstreetmap.org";
-            ScaleNames = "0.5 m,1 m,2 m,5 m,10 m,20 m,40 m,80 m,160 m,320 m,640 m,1.3 km,2.5 km,5 km,10 km,20 km,40 km,80 km";
-        }
-    }
-
-    public class ServerOpenStreetMapsOsmarender : ServerOpenStreetMaps
-    {
-        public ServerOpenStreetMapsOsmarender() : base(17)
-        {
-            Name = "OpenStreet Maps Street Map Image / Osmarender";
-            DefaultURL = "http://tah.openstreetmap.org/Tiles/tile";
-            ScaleNames = "1 m,2 m,5 m,10 m,20 m,40 m,80 m,160 m,320 m,640 m,1.3 km,2.5 km,5 km,10 km,20 km,40 km,80 km";
-        }
-    }
-
-    public class ServerCloudMadeMaps : ServerOpenStreetMaps
-    {
-        public ServerCloudMadeMaps()
-            : base(18)
-        {
-            //http://developers.cloudmade.com/projects/web-maps-lite/examples
-            Name = "CloudMade Maps";
-            DefaultURL = "http://tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/1";
-            ScaleNames = "0.5 m,1 m,2 m,5 m,10 m,20 m,40 m,80 m,160 m,320 m,640 m,1.3 km,2.5 km,5 km,10 km,20 km,40 km,80 km";
-        }
-
-        protected override string GetTileUrl(int x, int y, int scale)
-        {
-            // adds tile size
-            return String.Format("{0:s}/256/{1:d}/{2:d}/{3:d}.png", URL, scale, x, y);
-        }
-    }
-
-    public class ServerCycleMaps : ServerOpenStreetMaps
-    {
-        public ServerCycleMaps()
-            : base(18)
-        {
-            Name = "Open Cycle Maps";
-            DefaultURL = "http://a.tile.opencyclemap.org/cycle";
-            ScaleNames = "0.5 m,1 m,2 m,5 m,10 m,20 m,40 m,80 m,160 m,320 m,640 m,1.3 km,2.5 km,5 km,10 km,20 km,40 km,80 km";
-            
-        }
-    }
-
-    public class ServerMapQuestOsmMaps : ServerOpenStreetMaps
-    {
-        public ServerMapQuestOsmMaps()
-            : base(18)
-        {
-            Name = "MapQuest-OSM street maps";
-            DefaultURL = "http://otile1.mqcdn.com/tiles/1.0.0/osm";
-            ScaleNames = "0.5 m,1 m,2 m,5 m,10 m,20 m,40 m,80 m,160 m,320 m,640 m,1.3 km,2.5 km,5 km,10 km,20 km,40 km,80 km";
-
-        }
-    }
-
-    public class ServerMapQuestOpenAerial : ServerOpenStreetMaps
-    {
-        public ServerMapQuestOpenAerial()
-            : base(18)
-        {
-            Name = "MapQuest Open Aerial Images";
-            DefaultURL = "http://oatile1.mqcdn.com/naip";
-            ScaleNames = "0.5 m,1 m,2 m,5 m,10 m,20 m,40 m,80 m,160 m,320 m,640 m,1.3 km,2.5 km,5 km,10 km,20 km,40 km,80 km";
-
         }
     }
 }

@@ -4,7 +4,7 @@ namespace Manifold.ImageServer.Acetate
 {
    
     
-        public class AcetateHillshade : ServerOpenStreetMaps 
+        public class AcetateHillshade : Server 
         {
             public AcetateHillshade()
                 : base(18)

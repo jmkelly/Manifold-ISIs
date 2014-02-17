@@ -35,6 +35,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{30F37C
 		.nuget\packages.config = .nuget\packages.config
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OpenStreetMaps", "OpenStreetMaps", "{49B9BB74-1DE6-47F4-B665-41BADF48C09F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenStreetMapsTests", "OpenStreetMapsTests\OpenStreetMapsTests.csproj", "{345E1464-01A8-4A9A-885E-8779DA205C26}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -77,6 +81,10 @@ Global
 		{7A25B80F-D182-4325-9747-EEC8E9364167}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7A25B80F-D182-4325-9747-EEC8E9364167}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7A25B80F-D182-4325-9747-EEC8E9364167}.Release|Any CPU.Build.0 = Release|Any CPU
+		{345E1464-01A8-4A9A-885E-8779DA205C26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{345E1464-01A8-4A9A-885E-8779DA205C26}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{345E1464-01A8-4A9A-885E-8779DA205C26}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{345E1464-01A8-4A9A-885E-8779DA205C26}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -85,5 +93,7 @@ Global
 		{9E70E46B-447D-4D05-AD7E-543F4B102061} = {08118717-13C3-4B55-8C72-6073B99398C0}
 		{C1F2A075-A6EB-46CB-9444-31123D5E55FC} = {08118717-13C3-4B55-8C72-6073B99398C0}
 		{7A25B80F-D182-4325-9747-EEC8E9364167} = {08118717-13C3-4B55-8C72-6073B99398C0}
+		{841B0455-B93F-4FDC-A460-11B57676B347} = {49B9BB74-1DE6-47F4-B665-41BADF48C09F}
+		{345E1464-01A8-4A9A-885E-8779DA205C26} = {49B9BB74-1DE6-47F4-B665-41BADF48C09F}
 	EndGlobalSection
 EndGlobal

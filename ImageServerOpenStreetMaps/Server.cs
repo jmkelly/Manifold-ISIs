@@ -219,6 +219,8 @@ namespace Manifold.ImageServer.OpenStreetMaps
             set { _url = value; }
         }
 
+        public ILog Log { get; set; }
+
         // Create HTTP request
         private static HttpWebRequest CreateHttpRequest(String _url, String _strProxyAddress, String _strProxyUsername, String _strProxyPassword)
         {

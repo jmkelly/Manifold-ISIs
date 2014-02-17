@@ -30,6 +30,11 @@ namespace Manifold.ImageServer.OpenStreetMaps
 
         protected Server(Int32 scaleHi)
         {
+            //setup log
+
+            Log = FileLog.Build();
+            Log.Debug("ctor called");
+
             Name = "";
             _defaultUrl = "";
             _url = _defaultUrl;
